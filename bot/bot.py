@@ -1,10 +1,15 @@
 #id 593316048942399507
-#token NTkzMzE2MDQ4OTQyMzk5NTA3.XRMHxQ.6JstH02kRSwsWqwBLFqQG61qoTE
 #prem 67584
 # https://discordapp.com/oauth2/authorize?client_id=593316048942399507&scope=bot&premissions=67584
 
 import discord
 import sqlite3
+import urllib.request
+import random
+from meme_create import meme_overlap
+
+with open("../RoastMeMeBotData.txt") as data:    ## For token
+    token = data.read().rstrip()                 ## security
 
 conn = sqlite3.connect("data/roasts.db")
 c = conn.cursor()
@@ -33,7 +38,16 @@ async def on_message(message):
             c.execute(f"INSERT INTO roasts VALUES (?, ?)", (message.author.id, 1))
         conn.commit()
 
-        await message.channel.send("INSERT ROAST HERE")
+        idd = random.randint(0, 1000000)
+        memerand = random.randint(0, 1)
+
+        opener = urllib.request.URLopener()
+        opener.addheader("User-Agent", "Mozilla/5.0 (X11; Linux i686; rv:64.0) Gecko/20100101 Firefox/64.0")
+        opener.retrieve(str(message.author.avatar_url).replace(".webp", ".png"), f"resources/temp/avatar_{idd}.png")
+
+        memeid = meme_overlap(str(memerand), idd, message.author.name)
+
+        await message.channel.send(files=[discord.File(f"resources/temp/meme_{memeid}.png")])
     elif message.content.lower() == "#roasts":
         c.execute(f"SELECT * FROM roasts WHERE id={message.author.id}")
         fetched = c.fetchone()
@@ -55,10 +69,21 @@ async def on_message(message):
             else:
                 c.execute(f"UPDATE roasts SET roasts = :roasts WHERE id={message.author.id}", {"roasts": fetched[1] - 2})
                 conn.commit()
-                await message.channel.send(f"INSERT ROAST OF {message.content.split()[1]} HERE!")
+
+                idd = random.randint(0, 1000000)
+                memerand = random.randint(0, 1)
+
+                opener = urllib.request.URLopener()
+                opener.addheader("User-Agent", "Mozilla/5.0 (X11; Linux i686; rv:64.0) Gecko/20100101 Firefox/64.0")
+                opener.retrieve(str(message.mentions[0].avatar_url).replace(".webp", ".png"), f"resources/temp/avatar_{idd}.png")
+
+                memeid = meme_overlap(str(memerand), idd, message.mentions[0].name)
+
+                await message.channel.send(files=[discord.File(f"resources/temp/meme_{memeid}.png")])
         else:
             c.execute(f"INSERT INTO roasts VALUES (?, ?)", (message.author.id, 0))
             conn.commit()
             embed=discord.Embed(title="Roasts", description=f"You, {message.author.name}, don't have enough self-roasts stored (you need at least 2 and you have 0)")
             await message.channel.send(embed=embed)
-client.run("NTkzMzE2MDQ4OTQyMzk5NTA3.XRMHxQ.6JstH02kRSwsWqwBLFqQG61qoTE")
+
+client.run(token)
