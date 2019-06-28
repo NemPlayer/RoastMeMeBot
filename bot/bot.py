@@ -120,4 +120,4 @@ async def on_message(message):
         embed=discord.Embed(title="Error", description=f"You, {message.author.name}, tried to roast a non-existing user, please try again")
         await message.channel.send(embed=embed)
 
-client.run("NTkzMzE2MDQ4OTQyMzk5NTA3.XRRO1g.kRsI0p2jVO2mHZlreOVL3Y4xYw4")
+client.run("TOKEN")
