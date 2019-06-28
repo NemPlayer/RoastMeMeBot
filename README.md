@@ -23,6 +23,7 @@ In order to setup the RoastMeMe Discord bot if you want to host it yourself, fol
 7. Run `python3 data/db.py` (or `python3 data\db.py` if you're using Windows) in order to setup the database
 8. Run `python3 bot/bot.py` (or `python3 bot\bot.py` if you're using Windows) in order to get the Discord bot to start up
 9. Everything should now work and your bot should operate as RoastMeMeBot
+
 The minimal needed premissions code for the bot: 67584.
 
 ### CFG File Syntax
