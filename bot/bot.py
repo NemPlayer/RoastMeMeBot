@@ -1,7 +1,3 @@
-#id 593316048942399507
-#prem 67584
-# https://discordapp.com/oauth2/authorize?client_id=593316048942399507&scope=bot&premissions=67584
-
 import discord
 import sqlite3
 import urllib.request
