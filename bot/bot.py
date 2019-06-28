@@ -116,12 +116,12 @@ async def on_message(message):
                         logging.info(f"Retrieved {message.author.name}'s avatar")
                     if not os.path.isfile(f"resources/temp/meme_{memerand}_{message.mentions[0].id}.png"):
                         meme_overlap(str(memerand), message.mentions[0].id, message.mentions[0].name)
-                        logging.info(f"Overlapped meme_{memerand} for {message.author.name}")
+                        logging.info(f"Overlapped meme_{memerand} for {message.mentions[0].name}")
 
                     await message.channel.send(file=discord.File(f"resources/temp/meme_{memerand}_{message.mentions[0].id}.png"))
                     if cache != "enable":
-                        os.remove(f"resources/temp/meme_{memerand}_{message.author.id}.png")
-                        os.remove(f"resources/temp/avatar_{message.author.id}.png")
+                        os.remove(f"resources/temp/meme_{memerand}_{message.mentions[0].id}.png")
+                        os.remove(f"resources/temp/avatar_{message.mentions[0].id}.png")
 
                 except IndexError:
                     embed=discord.Embed(title="Error", description=f"You, {message.author.name}, tried to roast a non-existing user, please try again")
@@ -137,4 +137,4 @@ async def on_message(message):
         embed=discord.Embed(title="Error", description=f"You, {message.author.name}, tried to roast a non-existing user, please try again")
         await message.channel.send(embed=embed)
 
-client.run("TOKEN")
+client.run("NTkzMzE2MDQ4OTQyMzk5NTA3.XRRO1g.kRsI0p2jVO2mHZlreOVL3Y4xYw4")
