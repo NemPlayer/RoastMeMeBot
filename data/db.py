@@ -1,6 +1,10 @@
 import sqlite3
+import logging
 
-conn = sqlite3.connect("roasts.db")
+logging.basicConfig(level=logging.INFO,
+                    format="[%(levelname)s] [%(asctime)s] - %(message)s")
+
+conn = sqlite3.connect("data/roasts.db")
 
 c = conn.cursor()
 
@@ -10,7 +14,7 @@ try:
                 roasts integer
                 )""")
 except sqlite3.OperationalError:
-    print("[ERR] Table 'roasts' already exists")
+    logging.error("Table 'roasts' already exists")
 
 conn.commit()
 conn.close()

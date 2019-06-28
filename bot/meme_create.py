@@ -1,43 +1,46 @@
 from PIL import Image, ImageFont, ImageDraw
 import random
+import logging
 
-def meme_overlap(meme_id, avatar_id, username="Roasted"):
+logging.basicConfig(level=logging.INFO,
+                    format="[%(levelname)s] [%(asctime)s] - %(message)s")
+
+def meme_overlap(meme_id, avatar_id, username):
     meme = Image.open(f"resources/memes/meme_{meme_id}.png")
     avatar = Image.open(f"resources/temp/avatar_{avatar_id}.png")
 
-    if meme_id == "0":
-        area = (55, 5, 130, 80)
-        temp1 = meme.copy()
-        temp2 = avatar.copy()
-        temp2 = temp2.resize((75, 75), Image.ANTIALIAS)
-        temp1.paste(temp2, area)
+    d = ImageDraw.Draw(meme)
 
-        helvetica = ImageFont.truetype("resources/fonts/arial.ttf", size=15)
-        d = ImageDraw.Draw(temp1)
+    logging.info(f"Starting meme_overlap({meme_id}, {avatar_id}, {username})")
 
-        location = (140, 20)
-        text_color = (255, 255, 255)
-        d.text(location, username, font=helvetica, fill=text_color)
+    try:
+        with open(f"resources/memes/meme_{meme_id}.cfg") as config:
+            for liner in config:
+                liner = liner.strip()
 
-        temp_meme_id = random.randint(0, 1000000)
+                if liner[:5] == "font=":
+                    try:
+                        line = liner[6:-1].split()
+                        font = ImageFont.truetype(f"resources/fonts/{line[0]}.ttf", size=int(line[1]))
+                        font_color = (int(line[2]), int(line[3]), int(line[4]))
+                    except (IndexError, ValueError, OSError):
+                        logging.error(f"Incorrect meme_{meme_id}.cfg setting: {liner}")
+                elif liner[:8] == "textpos=":
+                    try:
+                        line = liner[9:-1].split()
+                        d.text((int(line[0]), int(line[1])), username, font=font, fill=font_color)
+                    except (IndexError, ValueError, NameError):
+                        logging.error(f"Incorrect meme_{meme_id}.cfg setting: {liner}")
+                elif liner[:10] == "avatarpos=":
+                    try:
+                        line = liner[11:-1].split()
+                        avatar_temp = avatar.resize((int(line[2]) - int(line[0]), int(line[3]) - int(line[1])))
+                        meme.paste(avatar_temp, (int(line[0]), int(line[1]), int(line[2]), int(line[3])))
+                    except (IndexError, ValueError):
+                        logging.error(f"Incorrect meme_{meme_id}.cfg setting: {liner}")
+                elif liner:
+                    logging.warning(f"Unexpected meme_{meme_id}.cfg setting: {liner}")
+    except FileNotFoundError:
+        logging.error(f"File 'resources/memes/meme_{meme_id}.cfg' doesn't exist")
 
-        temp1.save(f"resources/temp/meme_{temp_meme_id}.png")
-
-    elif meme_id == "1":
-        area = (30, 10, 105, 85)
-        temp1 = meme.copy()
-        temp2 = avatar.copy()
-        temp2 = temp2.resize((75, 75), Image.ANTIALIAS)
-        temp1.paste(temp2, area)
-        area = (30, 140, 105, 215)
-        temp2 = temp2.resize((75, 75), Image.ANTIALIAS)
-        temp1.paste(temp2, area)
-        area = (80, 270, 200, 390)
-        temp2 = temp2.resize((120, 120), Image.ANTIALIAS)
-        temp1.paste(temp2, area)
-
-        temp_meme_id = random.randint(0, 1000000)
-
-        temp1.save(f"resources/temp/meme_{temp_meme_id}.png")
-
-    return temp_meme_id
+    meme.save(f"resources/temp/meme_{meme_id}_{avatar_id}.png", compress_level=1)
