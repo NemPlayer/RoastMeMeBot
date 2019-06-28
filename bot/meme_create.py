@@ -1,17 +1,17 @@
 from PIL import Image, ImageFont, ImageDraw
 import random
 import logging
+import io
 
 logging.basicConfig(level=logging.INFO,
                     format="[%(levelname)s] [%(asctime)s] - %(message)s")
 
-def meme_overlap(meme_id, avatar_id, username):
+def meme_overlap(meme_id, avatar, username):
     meme = Image.open(f"resources/memes/meme_{meme_id}.png")
-    avatar = Image.open(f"resources/temp/avatar_{avatar_id}.png")
 
     d = ImageDraw.Draw(meme)
 
-    logging.info(f"Starting meme_overlap({meme_id}, {avatar_id}, {username})")
+    logging.info(f"Starting meme_overlap({meme_id}, {username})")
 
     try:
         with open(f"resources/memes/meme_{meme_id}.cfg") as config:
@@ -43,4 +43,8 @@ def meme_overlap(meme_id, avatar_id, username):
     except FileNotFoundError:
         logging.error(f"File 'resources/memes/meme_{meme_id}.cfg' doesn't exist")
 
-    meme.save(f"resources/temp/meme_{meme_id}_{avatar_id}.png", compress_level=1)
+
+    imgByteArr = io.BytesIO()
+    meme.save(imgByteArr, format='PNG')
+    imgByteArr = imgByteArr.getvalue()
+    return imgByteArr

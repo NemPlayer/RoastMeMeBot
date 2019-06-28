@@ -1,12 +1,15 @@
 import discord
 import sqlite3
 import urllib.request
+import requests
 import random
 from meme_create import meme_overlap
 import logging
 import os
 import os.path
 import fnmatch
+import io
+from PIL import Image
 
 logging.basicConfig(level=logging.INFO,
                     format="[%(levelname)s] [%(asctime)s] - %(message)s")
@@ -64,19 +67,13 @@ async def on_message(message):
 
         memerand = random.randint(0, len(fnmatch.filter(os.listdir("resources/memes/"), "*.png")) - 1)
 
-        if not os.path.isfile(f"resources/temp/avatar_{message.author.id}.png"):
-            opener = urllib.request.URLopener()
-            opener.addheader("User-Agent", "Mozilla/5.0 (X11; Linux i686; rv:64.0) Gecko/20100101 Firefox/64.0")
-            opener.retrieve(str(message.author.avatar_url).replace(".webp", ".png"), f"resources/temp/avatar_{message.author.id}.png")
-            logging.info(f"Retrieved {message.author.name}'s avatar")
-        if not os.path.isfile(f"resources/temp/meme_{memerand}_{message.author.id}.png"):
-            meme_overlap(str(memerand), message.author.id, message.author.name)
-            logging.info(f"Overlapped meme_{memerand} for {message.author.name}")
+        response = requests.get(str(message.author.avatar_url).replace(".webp", ".png"))
+        img = Image.open(io.BytesIO(response.content))
+        logging.info(f"Retrieved {message.author.name}'s avatar")
+        meme = meme_overlap(str(memerand), img, message.author.name)
+        logging.info(f"Overlapped meme_{memerand} for {message.author.name}")
 
-        await message.channel.send(file=discord.File(f"resources/temp/meme_{memerand}_{message.author.id}.png"))
-        if cache != "enable":
-            os.remove(f"resources/temp/meme_{memerand}_{message.author.id}.png")
-            os.remove(f"resources/temp/avatar_{message.author.id}.png")
+        await message.channel.send(file=discord.File(io.BytesIO(meme), filename="meme.png"))
 
     elif message.content.lower() == f"{prefix}roasts":
         logging.info(f"{message.author.name} ran '{message.content.lower()}' at server {message.guild.name} channel #{message.channel.name}")
@@ -108,20 +105,13 @@ async def on_message(message):
                     message.mentions[0]
 
                     memerand = random.randint(0, len(fnmatch.filter(os.listdir("resources/memes/"), "*.png")) - 1)
+                    response = requests.get(str(message.mentions[0].avatar_url).replace(".webp", ".png"))
+                    img = Image.open(io.BytesIO(response.content))
+                    logging.info(f"Retrieved {message.mentions[0].name}'s avatar")
+                    meme = meme_overlap(str(memerand), img, message.mentions[0].name)
+                    logging.info(f"Overlapped meme_{memerand} for {message.mentions[0].name}")
 
-                    if not os.path.isfile(f"resources/temp/avatar_{message.mentions[0].id}.png"):
-                        opener = urllib.request.URLopener()
-                        opener.addheader("User-Agent", "Mozilla/5.0 (X11; Linux i686; rv:64.0) Gecko/20100101 Firefox/64.0")
-                        opener.retrieve(str(message.mentions[0].avatar_url).replace(".webp", ".png"), f"resources/temp/avatar_{message.mentions[0].id}.png")
-                        logging.info(f"Retrieved {message.author.name}'s avatar")
-                    if not os.path.isfile(f"resources/temp/meme_{memerand}_{message.mentions[0].id}.png"):
-                        meme_overlap(str(memerand), message.mentions[0].id, message.mentions[0].name)
-                        logging.info(f"Overlapped meme_{memerand} for {message.mentions[0].name}")
-
-                    await message.channel.send(file=discord.File(f"resources/temp/meme_{memerand}_{message.mentions[0].id}.png"))
-                    if cache != "enable":
-                        os.remove(f"resources/temp/meme_{memerand}_{message.mentions[0].id}.png")
-                        os.remove(f"resources/temp/avatar_{message.mentions[0].id}.png")
+                    await message.channel.send(file=discord.File(io.BytesIO(meme), filename="meme.png"))
 
                 except IndexError:
                     embed=discord.Embed(title="Error", description=f"You, {message.author.name}, tried to roast a non-existing user, please try again")
