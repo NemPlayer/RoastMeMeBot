@@ -1,6 +1,8 @@
 # RoastMeMe Discord bot
 RoastMeMe is a Discord bot made for the first Discord Hack Week event. The category RoastMeMe targets is 'shitpost'.
 
+The invitation URL for the bot: https://discordapp.com/oauth2/authorize?client_id=593316048942399507&scope=bot&premissions=67584
+
 ### Description
 RoastMeMe makes roasting yourself and other users on the server possible trough memes. To keep the roasting fair, anyone who would like to roast another user has to roast themselves 2 times. This brings meaning and will to roasting. The avatar of the user that's being roasted gets placed on the meme, as configured for each meme, together with the user's name - that way the memes feel like actual meme roasts and not just a meme. The memes are contained within the 'resources/memes' (or 'resources\\memes' if you're using Windows) folder. Each meme has a corresponding 'cfg' file, which is used to configure the fonts and placements of user avatars and text in the meme. This makes it easier to add/edit memes (look at the 'Adding/Editing resources' for more information on the topic). Storing data about how many 'roasts' a user has collected is done trough SQLite 3, so that any maintenance of the bot doesn't result in the loss of 'roasts'.
 
