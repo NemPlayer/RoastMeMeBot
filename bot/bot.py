@@ -1,6 +1,5 @@
 import discord
 import sqlite3
-import urllib.request
 import requests
 import random
 from meme_create import meme_overlap
@@ -15,7 +14,6 @@ logging.basicConfig(level=logging.INFO,
                     format="[%(levelname)s] [%(asctime)s] - %(message)s")
 
 prefix = "rt#"
-cache = "disable"
 
 with open("bot/bot.cfg") as data:
     for line in data:
@@ -25,11 +23,6 @@ with open("bot/bot.cfg") as data:
                 prefix = line[8:-1]
             except IndexError:
                 logging.error(f"Incorrect bot.cfg setting: {line}")
-        elif line[:6] == "cache=":
-            try:
-                cache = line[7:-1]
-            except IndexError:
-                loggin.error(f"Incorrect bot.cfg setting: {line}")
         elif line:
             logging.warning(f"Unexpected bot.cfg setting: {line}")
 
