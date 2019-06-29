@@ -16,15 +16,16 @@ The commands are not including the prefix (by default 'rt#', can be changed in '
 
 ### Setup
 In order to setup the RoastMeMe Discord bot if you want to host it yourself, follow the instructions below in order:
-1. Download the RoastMeMeBot GitHub repository
-2. Extract it from the ZIP file
-3. Enter into the 'RoastMeMeBot-master/bot/bot.cfg' (or 'RoastMeMeBot-master\\bot\\bot.cfg' if you're using Windows) using any text editor and replace the `token="TOKEN"` with `token="[your_token]"` (e.g. `token="a1B2c3D4e5F6g.ABCD123.abcd123-abc123DEF456"`)
-4. Open the terminal
-5. Navigate until your current working directory is 'RoastMeMeBot-master'
-6. Run `pip3 install -r requirements.txt` in order to install all dependencies
-7. Run `python3 data/db.py` (or `python3 data\db.py` if you're using Windows) in order to setup the database
-8. Run `python3 bot/bot.py` (or `python3 bot\bot.py` if you're using Windows) in order to get the Discord bot to start up
-9. Everything should now work and your bot should operate as RoastMeMeBot
+1. Install Python 3
+2. Download the RoastMeMeBot GitHub repository
+3. Extract it from the ZIP file
+4. Enter into the 'RoastMeMeBot-master/bot/bot.cfg' (or 'RoastMeMeBot-master\\bot\\bot.cfg' if you're using Windows) using any text editor and replace the `token="TOKEN"` with `token="[your_token]"` (e.g. `token="a1B2c3D4e5F6g.ABCD123.abcd123-abc123DEF456"`)
+5. Open the terminal
+6. Navigate until your current working directory is 'RoastMeMeBot-master'
+7. Run `pip3 install -r requirements.txt` in order to install all dependencies
+8. Run `python3 data/db.py` (or `python3 data\db.py` if you're using Windows) in order to setup the database
+9. Run `python3 bot/bot.py` (or `python3 bot\bot.py` if you're using Windows) in order to get the Discord bot to start up
+10. Everything should now work and your bot should operate as RoastMeMeBot
 
 The minimal needed premissions code for the bot: 67584.
 
