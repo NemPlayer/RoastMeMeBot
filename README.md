@@ -18,7 +18,7 @@ The commands are not including the prefix (by default 'rt#', can be changed in '
 In order to setup the RoastMeMe Discord bot if you want to host it yourself, follow the instructions below in order:
 1. Download the RoastMeMeBot GitHub repository
 2. Extract it from the ZIP file
-3. Enter into the 'RoastMeMeBot-master/bot/bot.py' (or 'RoastMeMeBot-master\\bot\\bot.py' if you're using Windows) using any text editor and replace the "TOKEN" all the way at the bottom to your token and save.
+3. Enter into the 'RoastMeMeBot-master/bot/bot.cfg' (or 'RoastMeMeBot-master\\bot\\bot.cfg' if you're using Windows) using any text editor and replace the `token="TOKEN"` with `token="[your_token]"` (e.g. `token="N0t4R34lT0k3ngQyMzk5NTA3.XRZSGw.XeHd2FWY-lDSHIV7i71U2dwAt2A"`)
 4. Open the terminal
 5. Navigate until your current working directory is 'RoastMeMeBot-master'
 6. Run `pip3 install -r requirements.txt` in order to install all dependencies
