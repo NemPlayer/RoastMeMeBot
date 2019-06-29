@@ -14,6 +14,7 @@ logging.basicConfig(level=logging.INFO,
                     format="[%(levelname)s] [%(asctime)s] - %(message)s")
 
 prefix = "rt#"
+token = None
 
 with open("bot/bot.cfg") as data:
     for line in data:
@@ -23,8 +24,16 @@ with open("bot/bot.cfg") as data:
                 prefix = line[8:-1]
             except IndexError:
                 logging.error(f"Incorrect bot.cfg setting: {line}")
+        elif line[:6] == "token=":
+            try:
+                token = line[7:-1]
+            except IndexError:
+                logging.error(f"Incorrect bot.cfg setting: {line}")
         elif line:
             logging.warning(f"Unexpected bot.cfg setting: {line}")
+
+if not token:
+    logging.critical(f"Token not specified")
 
 
 conn = sqlite3.connect("data/roasts.db")
@@ -120,4 +129,4 @@ async def on_message(message):
         embed=discord.Embed(title="Error", description=f"You, {message.author.name}, tried to roast a non-existing user, please try again")
         await message.channel.send(embed=embed)
 
-client.run("TOKEN")
+client.run(token)
