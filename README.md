@@ -8,7 +8,7 @@ RoastMeMe makes roasting yourself and other users on the server possible trough 
 
 ### Commands
 RoastMeMe has 4 commands so that the main functionality of the bot becomes as simple to use as possible.
-The commands are not including the prefix (by default 'rt#', can be changed in 'bot/bot.cfg' (or 'bot\\bot.cf' if you're using Windows)):
+The commands are not including the prefix (by default 'rt#', can be changed in 'bot/bot.cfg' (or 'bot\\bot.cfg' if you're using Windows)):
 - *help*, shows the help menu
 - *roastmeme*, roasts the user who wrote the command
 - *roast @[username]*, roasts the tagged user
