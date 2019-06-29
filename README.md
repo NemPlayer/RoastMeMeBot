@@ -32,9 +32,10 @@ The minimal needed premissions code for the bot: 67584.
 CFG files have a unique syntax (which is white-space sensitive). The only data-type that exists is a string. There are certain variables you can change which have to contain the exact string format that was made for them.
 The CFG files syntax goes as follows:
 `[variable]="[value]"`
-Firstly, variables, there's 1 that exists for 'bot.cfg' and 3 that exist for 'meme_[id].cfg' files.
-'bot.cfg' files contain the variables 'prefix':
+Firstly, variables, there's 2 that exists for 'bot.cfg' and 3 that exist for 'meme_[id].cfg' files.
+'bot.cfg' files contain the variables 'prefix' and 'token':
 1. 'prefix' changes the prefix to be exactly the same as the value (e.g. if the command `prefix="!!"` is written the prefix would be '!!', so you would run `!!help` instead of the default `rt#help`)
+2. 'token' changes the token of the bot
 
 'meme_[id].cfg' files contain the variables 'font', 'textpos' and 'avatarpos' which directly influence the 'meme_[id].png' files (referred to as 'memes' in the text below):
 1. 'font' variable sets the font to have a specific font-family (hast to be truetype), size and color. The string's format goes as follows: `font="[font_name] [size] [R] [G] [B]"` where: - '[font_name]' is the name of a font for future text - the font has to be inside of 'resources/fonts/' (or 'resources\\fonts\\' if you're using Windows) not including the file extension (so 'arial.ttf' would be written as 'arial') - '[size]' is the size of the future text - '[R]' is the amount of color red in future text - '[G]' is the amount of color green in future text - '[B]' is the amount of color blue in future text - By 'future text' im referring to any text placed using 'textpos' until the next 'font' variable. For example:
