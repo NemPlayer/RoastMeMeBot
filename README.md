@@ -4,11 +4,11 @@ RoastMeMe is a Discord bot made for the first Discord Hack Week event. The categ
 The invitation URL for the bot: https://discordapp.com/oauth2/authorize?client_id=593316048942399507&scope=bot&premissions=67584
 
 ### Description
-RoastMeMe makes roasting yourself and other users on the server possible trough memes. To keep the roasting fair, anyone who would like to roast another user has to roast themselves 2 times. This brings meaning and will to roasting. The avatar of the user that's being roasted gets placed on the meme, as configured for each meme, together with the user's name - that way the memes feel like actual meme roasts and not just a meme. The memes are contained within the 'resources/memes' (or 'resources\\memes' if you're using Windows) folder. Each meme has a corresponding 'cfg' file, which is used to configure the fonts and placements of user avatars and text in the meme. This makes it easier to add/edit memes (look at the 'Adding/Editing resources' for more information on the topic). Storing data about how many 'roasts' a user has collected is done trough SQLite 3, so that any maintenance of the bot doesn't result in the loss of 'roasts'.
+RoastMeMe makes roasting yourself and other users on the server possible trough memes. To keep the roasting fair, anyone who would like to roast another user has to roast themselves 2 times. This brings meaning and will to roasting. The avatar of the user that's being roasted gets placed on the meme, as configured for each meme, together with the user's name - that way the memes feel like actual meme roasts and not just a meme. The memes are contained within the 'resources/memes' (or 'resources\\memes' if you're using Windows) folder. Each meme has a corresponding CFG file, which is used to configure the fonts and placements of user avatars and name in the meme. This makes it easier to add/edit memes (look at the 'Adding/Editing resources' for more information on the topic). Storing data about how many 'roasts' a user has collected is done trough SQLite 3, so that any maintenance of the bot doesn't result in the loss of 'roasts'.
 
 ### Commands
 RoastMeMe has 4 commands so that the main functionality of the bot becomes as simple to use as possible.
-The commands are not including the prefix (by default 'rt#', can be changed in 'bot/bot.cfg' (or 'bot\\bot.cfg' if you're using Windows)):
+The commands are, not including the prefix (by default 'rt#', can be changed in 'bot/bot.cfg' - or 'bot\\bot.cfg' if you're using Windows):
 - *help*, shows the help menu
 - *roastmeme*, roasts the user who wrote the command
 - *roast @[username]*, roasts the tagged user
@@ -27,7 +27,7 @@ In order to setup the RoastMeMe Discord bot if you want to host it yourself, fol
 9. Run `python3 bot/bot.py` (or `python3 bot\bot.py` if you're using Windows) in order to get the Discord bot to start up
 10. Everything should now work and your bot should operate as RoastMeMeBot
 
-The minimal needed premissions code for the bot: 67584.
+The minimal needed permission code for the bot: 67584.
 
 ### CFG File Syntax
 CFG files have a unique syntax (which is white-space sensitive). The only data-type that exists is a string. There are certain variables you can change which have to contain the exact string format that was made for them.
